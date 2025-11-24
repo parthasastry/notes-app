@@ -1,0 +1,11 @@
+{
+    "name": "notes-api",
+    "version": "1.0.0",
+    "description": "Notes CRUD API Lambda function",
+    "type": "module",
+    "main": "index.mjs",
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.696.0",
+        "@aws-sdk/lib-dynamodb": "^3.696.0"
+    }
+}

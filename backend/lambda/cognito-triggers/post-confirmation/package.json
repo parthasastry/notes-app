@@ -1,0 +1,11 @@
+{
+    "name": "post-confirmation-trigger",
+    "version": "1.0.0",
+    "description": "Cognito post-confirmation trigger for Notes App",
+    "type": "module",
+    "main": "index.mjs",
+    "dependencies": {
+        "@aws-sdk/client-dynamodb": "^3.696.0",
+        "@aws-sdk/lib-dynamodb": "^3.696.0"
+    }
+}
