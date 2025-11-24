@@ -80,11 +80,16 @@ const Notes = () => {
             {/* Header */}
             <div className="flex justify-between items-center mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-gray-900">Notes</h1>
+                    <div className="flex items-center gap-3">
+                        <h1 className="text-3xl font-bold text-gray-900">Notes</h1>
+                        {notes.length > 0 && (
+                            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                                {notes.length} {notes.length === 1 ? 'note' : 'notes'}
+                            </span>
+                        )}
+                    </div>
                     <p className="mt-2 text-gray-600">
-                        {notes.length === 0
-                            ? 'No notes yet. Create your first note!'
-                            : `${notes.length} ${notes.length === 1 ? 'note' : 'notes'}`}
+                        {notes.length === 0 && 'No notes yet. Create your first note!'}
                     </p>
                 </div>
                 <button
