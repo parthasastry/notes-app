@@ -470,6 +470,113 @@ Now let's test that everything works!
 
 ## Troubleshooting
 
+### Issue: "refusing to allow a Personal Access Token to create or update workflow without `workflow` scope"
+
+**Error message:**
+
+```
+! [remote rejected] branch-name -> branch-name (refusing to allow a Personal Access Token to create or update workflow `.github/workflows/ci.yml` without `workflow` scope)
+```
+
+**Solution Options:**
+
+**Option 1: Update Personal Access Token (Recommended)**
+
+1. Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
+2. Find your token (or create a new one)
+3. When creating/editing, make sure to check the `workflow` scope
+4. Required scopes:
+   - ✅ `repo` (full control of private repositories)
+   - ✅ `workflow` (Update GitHub Action workflows)
+5. Save the token
+6. Update your Git credentials:
+
+   ```bash
+   # Remove old credentials
+   git credential reject https://github.com
+
+   # Next time you push, Git will prompt for credentials
+   # Use your updated PAT with workflow scope
+   git push origin test/github-actions-setup
+   ```
+
+**Option 2: Use SSH Instead of HTTPS (Easiest Long-term Solution)**
+
+1. Set up SSH key with GitHub (if not already done):
+
+   ```bash
+   # Check if you have SSH key
+   ls -al ~/.ssh
+
+   # If not, generate one
+   ssh-keygen -t ed25519 -C "your_email@example.com"
+
+   # Add to ssh-agent
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/id_ed25519
+   ```
+
+2. Add SSH key to GitHub:
+
+   - Copy public key: `cat ~/.ssh/id_ed25519.pub`
+   - GitHub → Settings → SSH and GPG keys → New SSH key
+   - Paste and save
+
+3. Change remote URL to SSH:
+
+   ```bash
+   # Check current remote
+   git remote -v
+
+   # Change to SSH (replace YOUR_USERNAME with your GitHub username)
+   git remote set-url origin git@github.com:YOUR_USERNAME/notes-app.git
+
+   # Verify
+   git remote -v
+   ```
+
+4. Push again:
+   ```bash
+   git push origin test/github-actions-setup
+   ```
+
+**Option 3: Add Workflow Files via GitHub Web Interface (Quick Fix)**
+
+If you just need to push the workflow files once:
+
+1. Go to your repository on GitHub: `https://github.com/parthasastry/notes-app`
+2. Click "Add file" → "Create new file"
+3. Type: `.github/workflows/ci.yml` (this creates the folder structure)
+4. Copy the content from `.github/workflows/ci.yml` in your local repo
+5. Paste into the web editor
+6. Click "Commit new file"
+7. Repeat for `deploy-staging.yml` and `deploy-production.yml`
+8. After that, you can push other changes normally
+
+**Option 4: Use GitHub CLI**
+
+1. Install GitHub CLI if not installed:
+
+   ```bash
+   # macOS
+   brew install gh
+
+   # Or download from: https://cli.github.com/
+   ```
+
+2. Authenticate:
+
+   ```bash
+   gh auth login
+   ```
+
+3. Push using GitHub CLI:
+   ```bash
+   git push origin test/github-actions-setup
+   ```
+
+**Recommended:** Use **Option 2 (SSH)** for the easiest long-term solution, or **Option 3 (Web Interface)** for a quick fix right now.
+
 ### Issue: "AWS credentials not found"
 
 **Solution:**
