@@ -1,5 +1,6 @@
 name: Deploy to Staging
 
+# Trigger deployment to staging environment
 on:
   push:
     branches: [staging]
