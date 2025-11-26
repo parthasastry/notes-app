@@ -12,6 +12,7 @@ export interface NotesAppStackProps extends cdk.StackProps {
 export class NotesAppStack extends cdk.Stack {
   public readonly appEnvironment: string; // Renamed from 'environment' to avoid CDK conflict
 
+  // Main infrastructure stack for Notes App
   constructor(scope: Construct, id: string, props: NotesAppStackProps) {
     super(scope, id, props);
 
